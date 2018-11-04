@@ -1,18 +1,26 @@
 <mat-card>
-  <form (submit)="onAddFeedback()" #feedbackForm="ngForm">
+  <form (submit)="onAddFeedback(feedbackForm)" #feedbackForm="ngForm">
     <mat-form-field>
       <input
         matInput
         type="text"
         name="title"
-        ngModel>
+        ngModel
+        required
+        placeholder="Title"
+        #title="ngModel">
+    <mat-error *ngIf="title.invalid">Please enter a title</mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea
         matInput
         rows="4"
         name="content"
-        ngModel></textarea>
+        ngModel
+        required
+        placeholder="Content"
+        #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please enter some content</mat-error>>
     </mat-form-field>
     <button
       mat-raised-button

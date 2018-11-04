@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Feedback } from '../feedback.model';
+import { FeedbackService } from '../feedback.service';
 
 
 @Component({
@@ -12,14 +13,19 @@ import { Feedback } from '../feedback.model';
 export class FeedbackCreateComponent {
   enteredTitle = '';
   enteredContent = '';
-  @Output() feedbackCreated = new EventEmitter<Feedback>();
+
+  constructor(public feedbackService: FeedbackService) {}
 
   onAddFeedback(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
     alert('Feedback successful');
     const feed: Feedback = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+      title: form.value.title,
+      content: form.value.content
     };
-    this.feedbackCreated.emit(feed);
+    this.feedbackService.addFeedback(form.value.title, form.value.content);
+    form.resetForm();
   }
 }
