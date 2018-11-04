@@ -1,2 +1,5 @@
-<h1>RAWR</h1>
-<app-feedback-create></app-feedback-create>
+<app-header></app-header>
+<main>
+  <app-feedback-create (feedbackCreated)="onFeedbackAdded($event)"></app-feedback-create>
+  <app-feedback-list [feedback]="storedFeedback"></app-feedback-list>
+</main>

@@ -1,10 +1,22 @@
 <mat-card>
+  <form (submit)="onAddFeedback()" #feedbackForm="ngForm">
     <mat-form-field>
-        <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
+      <input
+        matInput
+        type="text"
+        name="title"
+        ngModel>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="content"
+        ngModel></textarea>
     </mat-form-field>
     <button
-    mat-raised-button
-    color="primary"
-    (click)="onAddFeedback()">Save feedback</button>
+      mat-raised-button
+      color="primary"
+      type="submit">Save feedback</button>
+  </form>
 </mat-card>
-<p>{{ newFeedback }}</p>

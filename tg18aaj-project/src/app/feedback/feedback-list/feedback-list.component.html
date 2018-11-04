@@ -1,0 +1,9 @@
+<mat-accordion multi="true" *ngIf="feedback.length > 0">
+  <mat-expansion-panel *ngFor="let feed of feedback">
+    <mat-expansion-panel-header>
+      {{ feed.title }}
+    </mat-expansion-panel-header>
+    <p>{{ feed.content }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="feedback.length <= 0">No feedback yet</p>

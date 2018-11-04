@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { Feedback } from '../feedback.model';
+
 
 @Component({
   selector: 'app-feedback-create',
@@ -6,11 +10,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./feedback-create.component.css']
 })
 export class FeedbackCreateComponent {
-  enteredValue = '';
-  newFeedback = 'Please enter feedback';
+  enteredTitle = '';
+  enteredContent = '';
+  @Output() feedbackCreated = new EventEmitter<Feedback>();
 
-  onAddFeedback() {
+  onAddFeedback(form: NgForm) {
     alert('Feedback successful');
-    this.newFeedback = this.enteredValue;
+    const feed: Feedback = {
+      title: this.enteredTitle,
+      content: this.enteredContent
+    };
+    this.feedbackCreated.emit(feed);
   }
 }
