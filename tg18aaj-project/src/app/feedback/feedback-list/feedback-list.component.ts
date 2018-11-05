@@ -21,7 +21,7 @@ export class FeedbackListComponent implements OnInit, OnDestroy {
   constructor(public feedbackService: FeedbackService) {}
 
   ngOnInit() {
-    this.feedback = this.feedbackService.getFeedback();
+    this.feedbackService.getFeedback();
     this.feedSub = this.feedbackService.getFeedbackUpdateListener().subscribe((feedback: Feedback[]) => {
       this.feedback = feedback;
     });
