@@ -27,6 +27,10 @@ export class FeedbackListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDelete(feedId: string) {
+    this.feedbackService.delFeed(feedId);
+  }
+
   ngOnDestroy() {
     this.feedSub.unsubscribe();
   }

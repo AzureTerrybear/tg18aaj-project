@@ -1,9 +1,14 @@
 const express = require('express');
-
-const express = require("express");
 const bdParser = require("body-parser");
+const mongoose = require('mongoose');
+
+const Feed = require('./models/feedback');
 
 const app = express();
+
+// const options = {useNewUrlParser: true};
+
+mongoose.connect('mongodb://localhost:27017/feedbackCollection', { useNewUrlParser: true });
 
 app.use(bdParser.json());
 // not necessary but trying it
@@ -22,17 +27,26 @@ app.use((req, res, next) => {
   next();
 });
 
-app.feedback("/api/feedback", (req, res, next) => {
-  const feedback = req.body;
-  console.log(feedback);
-  res.status(201).json({
-    message: 'Your feedback has been received'
+app.post("/api/feedback", (req, res, next) => {
+  const feed = new Feed({
+    title: req.body.title,
+    content: req.body.content
+  });
+  // console.log(feed);
+  // mongo commands are better because it automatically updates the data
+  feed.save().then(newFeed => {
+    res.status(201).json({
+      message: "Your feedback has been received",
+      feedId: newFeed._id
+    });
   });
 });
 
 app.get("/api/feedback", (req, res, next) => {
-  const feedback = [
-  {
+
+  // dummy data
+  /* const feedback = [
+     {
     id: "123123",
     title: "First",
     content: "Serverside up"
@@ -42,11 +56,22 @@ app.get("/api/feedback", (req, res, next) => {
     title: "First again",
     content: "Serverside up once more"
   }
-];
-  res.status(200).json({
-    message: 'Good job server',
-    feedback: feedback
+]; */
+
+  Feed.find().then(documents => {
+    res.status(200).json({
+      message: 'Good job server',
+      feedback: documents
+    });
   });
 });
+
+// dynamically passed id
+app.delete("/api/feedback/:id", (req, res, next) => {
+  Feed.deleteOne({ _id: req.params.id }).then(result => {console.log(result);
+  res.status(200).json({message: "It's dead, son"});
+  });
+});
+
 
 module.exports = app;
