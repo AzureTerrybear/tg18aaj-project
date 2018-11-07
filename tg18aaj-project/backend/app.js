@@ -42,6 +42,18 @@ app.post("/api/feedback", (req, res, next) => {
   });
 });
 
+app.put("/api/feedback/:id", (req, res, next) => {
+  const feed = new Feed({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content
+  });
+  Feed.updateOne({ _id: req.params.id }, feed).then(result => {
+    console.log(result);
+    res.status(200).json({ message: "It has been edited!" });
+  });
+});
+
 app.get("/api/feedback", (req, res, next) => {
 
   // dummy data

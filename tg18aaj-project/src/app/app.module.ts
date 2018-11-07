@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { FeedbackCreateComponent } from './feedback/feedback-create/feedback-create.component';
 import { HeaderComponent } from './header/header.component';
 import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FeedbackListComponent } from './feedback/feedback-list/feedback-list.co
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,

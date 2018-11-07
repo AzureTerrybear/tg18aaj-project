@@ -1,5 +1,6 @@
 import { Feedback } from './feedback.model';
 
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -33,6 +34,11 @@ export class FeedbackService {
       });
   }
 
+  getFeed(id: string) {
+    // using the ... creates a duplicate of the object so that we do not manipulate data by mistake
+    return { ...this.feedback.find(p => p.id === id) };
+  }
+
   getFeedbackUpdateListener() {
     return this.fbUpdated.asObservable();
   }
@@ -47,6 +53,13 @@ export class FeedbackService {
       this.fbUpdated.next([...this.feedback]);
     });
 
+  }
+
+  updateFeed(id: string, title: string, content: string) {
+    const feed: Feedback = { id: id, title: title, content: content };
+    this.http
+      .put('http://localhost:3000/api/feedback/' + id, feed)
+      .subscribe(response => console.log(response));
   }
 
   delFeed(feedId: string) {
